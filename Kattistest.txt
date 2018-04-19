@@ -1,0 +1,99 @@
+Binary tomography: 
+
+import java.util.*;
+
+
+public class BinaryTomography {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+// The Scanner class is a class in java.util, which allows the user to read values of various types
+//System.in: An InputStream which is typically connected to keyboard input of console programs.
+    //for row    int r = sc.nextInt();
+    //for column    int c = sc.nextInt();
+       
+ int[] row_sum = new int[r];
+        for (int i = 0; i < r; i++) {
+            row_sum[i] = sc.nextInt();
+        }
+
+int[] col_sum = new int[c];
+        for (int i = 0; i < c; i++) {
+            col_sum[i] = sc.nextInt();
+        }
+ int[][] matrix = new int[r][c];
+
+        if (isPossible(matrix, row_sum, col_sum, 0, 0)) {
+            System.out.println("Yes");
+        } else {
+            System.out.println("No");
+        }
+    }
+
+    private static boolean isPossible(int[][] matrix, int[] row_sum, int[] col_sum, int i, int j) {
+        if (check(matrix, row_sum, col_sum)) {
+            return true;
+        }
+        if (i >= matrix.length || j >= matrix[0].length) {
+            return false;
+        }
+
+        matrix[i][j] = 1;
+
+        int nxtI = i, nxtJ = j;
+        if (nxtJ + 1 < matrix[0].length) {
+            nxtJ++;
+        } else {
+            nxtI++;
+            nxtJ = 0;
+        }
+        if (isPossible(matrix, row_sum, col_sum, nxtI, nxtJ)) {
+            return true;
+        }
+        matrix[i][j] = 0;
+        return isPossible(matrix, row_sum, col_sum, nxtI, nxtJ);
+    }
+
+    private static boolean check(int[][] matrix, int[] row_sum, int[] col_sum) {
+        for (int i = 0; i < matrix.length; i++) { // check rows sum
+            int s = 0;
+            for (int j = 0; j < matrix[0].length; j++) {
+                s += matrix[i][j];
+            }
+            if (s != row_sum[i]) {
+                return false;
+            }
+        }
+        for (int j = 0; j < matrix[0].length; j++) { // check cols sum
+            int s = 0;
+            for (int i = 0; i < matrix.length; i++) {
+                s += matrix[i][j];
+            }
+            if (s != col_sum[j]) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------
+
+Ladder problem kattis
+
+
+import java.util.Scanner;
+public class ladder {
+public static void main(String[] args) {
+Scanner scan = new Scanner(System.in);
+
+int height = scan.nextInt();
+int angle  = scan.nextInt();
+
+System.out.println((int)(Math.ceil(1 / (Math.sin(angle * (Math.PI / 180)) / height))));
+
+scan.close();
+	}
+
+}
